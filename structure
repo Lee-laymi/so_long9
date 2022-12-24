@@ -1,0 +1,8 @@
+check agument
+open fd
+dupmap1 from FD
+check map => c,p,e,1,0
+check dimension (rectangle)
+check wall (check 1)
+dupmap2 from dupmap1
+check foodfill
