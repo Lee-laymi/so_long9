@@ -23,6 +23,7 @@
 # include "math.h"
 # include "ft_getnextline/get_next_line.h"
 # include "mlx/mlx.h"
+# include "ft_printf/ft_printf.h"
 
 typedef struct s_vector
 {
@@ -43,14 +44,8 @@ typedef struct s_map
 typedef struct s_dim
 {
     t_vec   size;
-    // int     width;
-    // int     height;
     t_vec   p;
-    // int     px;
-    // int     py;
-   // int     lastrow;
-   // int     lastcolumn;
-    //int     mapheight;
+
 }               t_dim;
 
 typedef struct s_game
@@ -64,9 +59,12 @@ typedef struct s_game
     void    *floor;
     void    *collect;
     void    *door;
-    void    *robot;
+    void    *background;
+    int     c;
+    int     walking;
 
 }               t_game;
+
 
 void	ft_findxy(char *av, t_game *game);
 int		ft_countpec(t_game *game, int mode);
@@ -88,5 +86,10 @@ void	ft_initmap(t_game *game);
 void	ft_initdim(t_game *game);
 void ft_opengame(t_game *game);
 void	ft_initmlxenv(t_game *game);
+int	ft_keyhook(void);
+int	key_hook(int keycode, t_game *s_game);
+void check_wall(int mx,int my,t_game *game);
+int exit_hook(t_game *game);
+void	ft_checkformat(char *av, t_game *game);
 
 #endif

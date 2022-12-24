@@ -48,38 +48,11 @@ int	ft_checkwally(t_game *game)
 	return (1);
 }
 
-// int	ft_checkrec(t_game *game)
-// {
-// 	int		j;
-// 	//int		k;
-// 	int		tmp;
-// 	int		len_rec;
-
-// 	j = 0;
-// 	//k = 0;
-// 	while (j < game->dim.size.y)
-// 	{
-// 		tmp = ft_lenx(game->map.tmp_map);
-// 		len_rec = ft_lenx(game->map.tmp_map[j]);
-// 		if (tmp != len_rec)
-// 		{
-// 			write(2, "Map is not rectangula%s\n", 22);
-// 			return (0);
-// 		}
-// 		j++;
-// 	}
-// 	return (1);
-// }
-
 int	ft_checkrec(t_game *game)
 {
 	int		j;
-	//int		k;
-	//int		tmp;
 	int		len_rec;
 	
-	//k = 0;
-	//tmp = ft_lenx(game->map.tmp_map[0]);
 	j = 0;
 	while (j < game->dim.size.y)
 	{

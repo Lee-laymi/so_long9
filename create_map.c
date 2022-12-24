@@ -15,11 +15,9 @@
 char	**ft_create_tmpmap(char *av, t_game *game)
 {
 	int		opened;
-	//int		i;
 	int		j;
 
 	ft_findxy(av, game);
-	//printf("i = %d\n", i);
     if (game->dim.size.y == 0)
 	{
 		write(2, "Map Error\n", 10);
@@ -30,7 +28,6 @@ char	**ft_create_tmpmap(char *av, t_game *game)
 	if (opened < 0)
 		exit(0);
 	j = 0;
-	// game->map.tmp_map[j] = get_next_line(opened);
 	while (j < game->dim.size.y)
 	{
 		game->map.tmp_map[j] = get_next_line(opened);
@@ -44,11 +41,8 @@ char	**ft_create_tmpmap(char *av, t_game *game)
 char	**ft_create_realmap(char *av, t_game *game)
 {
 	int		opened;
-	//int		i;
 	int		j;
 
-	//ft_findxy(av, game);
-	//printf("i = %d\n", i);
     if (game->dim.size.x == 0)
 	{
 		write(2, "Map Error\n", 10);
@@ -66,7 +60,6 @@ char	**ft_create_realmap(char *av, t_game *game)
 		j++;
 	}
 	close(opened);
-	//game->map.real_map[j] = NULL;
 	return (game->map.real_map);
 }
 
@@ -91,21 +84,17 @@ void    ft_checkmap(t_game *game)
 	if (ft_checkpec(game) != 1)
 		{
 			ft_freemap(game);
-			exit (0);
 		}
 	else if (ft_checkwallx(game) != 1)
 		{
 			ft_freemap(game);
-			exit (0);
 		}
 	else if (ft_checkwally(game) != 1)
 		{
 			ft_freemap(game);
-			exit (0);
 		}
 	else if (ft_checkrec(game) != 1)
 		{
 			ft_freemap(game);
-			exit (0);
 		}
 }
