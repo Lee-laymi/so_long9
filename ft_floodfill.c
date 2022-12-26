@@ -6,7 +6,7 @@
 /*   By: ami <ami@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 23:20:35 by skrairab          #+#    #+#             */
-/*   Updated: 2022/12/22 16:59:42 by ami              ###   ########.fr       */
+/*   Updated: 2022/12/26 21:24:54 by skrsirab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_floodfill(t_game *game, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= game->dim.size.x || y >= game->dim.size.y 
+	if (x < 0 || y < 0 || x >= game->dim.size.x || y >= game->dim.size.y
 		|| game->map.tmp_map[y][x] == '1' || game->map.tmp_map[y][x] == 'W')
 		return ;
 	game->map.tmp_map[y][x] = 'W';
@@ -40,19 +40,21 @@ void	ft_findp(t_game *game)
 		game->dim.p.y++;
 	}
 }
-int		check_floodfill(t_game *game)
+
+int	check_floodfill(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
-	while(y < game->dim.size.y)
+	while (y < game->dim.size.y)
 	{
 		x = 0;
-		while(x < game->dim.size.x)
+		while (x < game->dim.size.x)
 		{
-			if (game->map.tmp_map[y][x] == 'C' 
-				|| game->map.tmp_map[y][x] == 'P' || game->map.tmp_map[y][x] == 'E')
+			if (game->map.tmp_map[y][x] == 'C'
+				|| game->map.tmp_map[y][x] == 'P'
+				|| game->map.tmp_map[y][x] == 'E')
 				return (1);
 			x++;
 		}
@@ -61,17 +63,14 @@ int		check_floodfill(t_game *game)
 	return (0);
 }
 
-void ft_floodfillmap(t_game *game)
+void	ft_floodfillmap(t_game *game)
 {
-
 	ft_findp(game);
-	printf("pos.px = %d\n", game->dim.p.x);
-	printf("pos.py = %d\n", game->dim.p.y);
 	ft_floodfill(game, game->dim.p.x, game->dim.p.y);
 	if (check_floodfill(game) == 1)
 	{
 		write(2, "Map is incorrect. Please try again!. %s\n", 38);
 		ft_freemap(game);
 		exit (0);
-	} 
+	}
 }

@@ -6,11 +6,11 @@
 /*   By: ami <ami@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:11:28 by ami               #+#    #+#             */
-/*   Updated: 2022/12/18 15:44:35 by ami              ###   ########.fr       */
+/*   Updated: 2022/12/26 16:53:49 by skrsirab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "so_long.h"
+#include "so_long.h"
 
 void	ft_check_ac(int ac, char **av)
 {
@@ -36,51 +36,49 @@ void	ft_check_ac(int ac, char **av)
 
 int	ft_countpec(t_game *game, int mode)
 {
-	int		k;
-	int		j;
-	int		c;
-	int		i;
+	int		count;
 
-	i = 0;
-	j = 0;
-	c = 0;
-	while (j < game->dim.size.y)
+	count = 0;
+	game->j = 0;
+	while (game->j < game->dim.size.y)
 	{
-		k = 0;
-		while (k < game->dim.size.x)
+		game->k = 0;
+		while (game->k < game->dim.size.x)
 		{
-			if ((mode == 1) && (game->map.tmp_map[j][k] == 'P'))
-				c++;
-			else if ((mode == 2) && (game->map.tmp_map[j][k] == 'E'))
-				c++;
-			else if ((mode == 3) && (game->map.tmp_map[j][k] == 'C'))
+			if ((mode == 1) && (game->map.tmp_map[game->j][game->k] == 'P'))
+				count++;
+			else if ((mode == 2)
+				&& (game->map.tmp_map[game->j][game->k] == 'E'))
+				count++;
+			else if ((mode == 3)
+				&& (game->map.tmp_map[game->j][game->k] == 'C'))
 			{
-					c++;
-					game->c = c;
+				count++;
+				game->c = count;
 			}
-			k++;
+			game->k++;
 		}
-		j++;
+		game->j++;
 	}
-	return (c);
+	return (count);
 }
 
 int	ft_checkpec(t_game *game)
 {
-    if (ft_countpec(game, 1) != 1 )
+	if (ft_countpec(game, 1) != 1)
 	{
 		write(2, "Player is error%s\n", 16);
-        ft_freemap(game);
+		ft_freemap(game);
 	}
-	if (ft_countpec(game, 2) != 1 )
+	else if (ft_countpec(game, 2) != 1)
 	{
 		write(2, "Exit is error%s\n", 14);
-        ft_freemap(game);
+		ft_freemap(game);
 	}
-	if (ft_countpec(game, 3) < 1 )
-    {
+	else if (ft_countpec(game, 3) < 1)
+	{
 		write(2, "Collectable is error%s\n", 21);
-        ft_freemap(game);
+		ft_freemap(game);
 	}
-    return (1);
+	return (1);
 }

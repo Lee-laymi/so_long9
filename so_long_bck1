@@ -6,13 +6,13 @@
 /*   By: ami <ami@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:21 by ami               #+#    #+#             */
-/*   Updated: 2022/12/26 22:52:36 by skrsirab         ###   ########.fr       */
+/*   Updated: 2022/12/26 21:55:33 by skrsirab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_walk(int mx, int my, t_game *game)
+void	check_wall(int mx, int my, t_game *game)
 {
 	if (game->map.real_map[my][mx] == '1')
 		return ;
@@ -37,11 +37,6 @@ void	check_walk(int mx, int my, t_game *game)
 		game->walking++;
 		ft_printf("walking = %d\n", game->walking);
 	}
-	ft_exit(mx, my, game);
-}
-
-void	ft_exit(int mx, int my, t_game *game)
-{
 	if (game->map.real_map[my][mx] == 'E')
 	{
 		mlx_put_image_to_window(game->mlx, game->win,
@@ -61,14 +56,78 @@ void	ft_exit(int mx, int my, t_game *game)
 	}
 }
 
+void	ft_imgadd(t_game *game)
+{
+	int	w;
+	int	h;
+	game->wall = mlx_xpm_file_to_image(game->mlx,"./texture/wall1.xpm", &w, &h);
+	game->background = mlx_xpm_file_to_image(game->mlx, "./texture/background.xpm", &w, &h);
+	game->collect = mlx_xpm_file_to_image(game->mlx, "./texture/ballon3.xpm", &w, &h);
+	game->door = mlx_xpm_file_to_image(game->mlx, "./texture/door2.xpm", &w, &h);
+	game->player = mlx_xpm_file_to_image(game->mlx, "./texture/player3.xpm", &w, &h);
+}
+
+void	ft_putimg(t_game *game)
+{
+	int y = 0;
+	int x;
+	
+	while(y < game->dim.size.y)
+	{
+		x = 0;
+		while (x < game->dim.size.x)
+		{
+			mlx_put_image_to_window(game->mlx, game->win, game->background, x * 64, y * 64);
+			if (game->map.real_map[y][x] == 'C')
+				mlx_put_image_to_window(game->mlx, game->win, game->collect, x * 64, y * 64);
+			else if (game->map.real_map[y][x] == 'E')
+				mlx_put_image_to_window(game->mlx, game->win, game->door, x * 64, y * 64);
+			else if (game->map.real_map[y][x] == '1')
+				mlx_put_image_to_window(game->mlx, game->win, game->wall, x * 64, y * 64);
+			else if (game->map.real_map[y][x] == 'P')
+				mlx_put_image_to_window(game->mlx, game->win, game->player, x * 64, y * 64);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	ft_opengame(t_game *game)
 {
+	// int	w;
+	// int	h;
 	ft_initmlxenv(game);
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, game->dim.size.x * 64, \
+	game->win = mlx_new_window(game->mlx, game->dim.size.x * 64,
 		game->dim.size.y * 64, "So_Long");
 	ft_imgadd(game);
 	ft_putimg(game);
+	// game->wall = mlx_xpm_file_to_image(game->mlx,"./texture/wall1.xpm", &w, &h);
+	// game->background = mlx_xpm_file_to_image(game->mlx, "./texture/background.xpm", &w, &h);
+	// game->collect = mlx_xpm_file_to_image(game->mlx, "./texture/ballon3.xpm", &w, &h);
+	// game->door = mlx_xpm_file_to_image(game->mlx, "./texture/door2.xpm", &w, &h);
+	// game->player = mlx_xpm_file_to_image(game->mlx, "./texture/player3.xpm", &w, &h);
+
+	// int y = 0;
+	// int x;
+	// while(y < game->dim.size.y)
+	// {
+	// 	x = 0;
+	// 	while (x < game->dim.size.x)
+	// 	{
+	// 		mlx_put_image_to_window(game->mlx, game->win, game->background, x * 64, y * 64);
+	// 		if (game->map.real_map[y][x] == 'C')
+	// 			mlx_put_image_to_window(game->mlx, game->win, game->collect, x * 64, y * 64);
+	// 		else if (game->map.real_map[y][x] == 'E')
+	// 			mlx_put_image_to_window(game->mlx, game->win, game->door, x * 64, y * 64);
+	// 		else if (game->map.real_map[y][x] == '1')
+	// 			mlx_put_image_to_window(game->mlx, game->win, game->wall, x * 64, y * 64);
+	// 		else if (game->map.real_map[y][x] == 'P')
+	// 			mlx_put_image_to_window(game->mlx, game->win, game->player, x * 64, y * 64);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
 	mlx_key_hook(game->win, key_hook, game);
 	mlx_hook(game->win, 17, 1L << 0, exit_hook, game);
 	mlx_loop(game->mlx);

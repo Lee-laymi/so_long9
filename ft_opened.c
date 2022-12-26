@@ -6,7 +6,7 @@
 /*   By: ami <ami@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:51:01 by skrairab          #+#    #+#             */
-/*   Updated: 2022/12/22 16:34:37 by ami              ###   ########.fr       */
+/*   Updated: 2022/12/26 22:53:52 by skrsirab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_findxy(char *av, t_game *game)
 {
 	int		opened;
 	char	*str;
-	int		i;
 
 	opened = open(av, O_RDONLY);
 	if (opened < 0)
@@ -28,10 +27,9 @@ void	ft_findxy(char *av, t_game *game)
 	if (str == 0)
 	{
 		write(2, "File error\n", 11);
-		exit(0) ;
+		exit(0);
 	}
 	game->dim.size.x = ft_lenx(str);
-	i = 0;
 	while (str)
 	{
 		free(str);
@@ -42,61 +40,56 @@ void	ft_findxy(char *av, t_game *game)
 	close (opened);
 }
 
-void	ft_checkformat(char *av, t_game *game)
+void	ft_checkformat(t_game *game)
 {
-	int		opened;
-	char	*str;
-	int		i;
+	int		n;
+	int		m;
 
-	opened = open(av, O_RDONLY);
-	if (opened < 0)
+	n = 0;
+	while (game->map.tmp_map[n] != NULL)
 	{
-		write(2, "File not found\n", 15);
-		return ;
-	}
-	str = get_next_line(opened);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '0' || str[i] != '1' || str[i] != 'P' || str[i] != 'C' || str[i] != 'E')
+		m = 0;
+		while (game->map.tmp_map[n][m] && game->map.tmp_map[n][m] != '\n')
 		{
-			write(2, "Map error\n", 10);
-			exit(0) ;
+			if (game->map.tmp_map[n][m] != '0' && game->map.tmp_map[n][m] != '1'
+			&& game->map.tmp_map[n][m] != 'P' && game->map.tmp_map[n][m] != 'C'
+			&& game->map.tmp_map[n][m] != 'E')
+			{
+				write(2, "Map error\n", 10);
+				exit(0);
+			}
+			m++;
 		}
+		n++;
 	}
-	i = 0;
-	while (str)
-	{
-		free(str);
-		printf("Hello!");
-		str = get_next_line(opened);
-		game->dim.size.y++;
-	}
-	free (str);
-	close (opened);
 }
 
 void	ft_initmap(t_game *game)
 {
 	game->map.path = NULL;
-	game->map.tmp_map = NULL;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+	game->map.tmp_map = NULL;
 	game->map.real_map = NULL;
 }
 
 void	ft_initdim(t_game *game)
 {
 	game->dim.size.x = 0;
-	game->dim.size.y = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+	game->dim.size.y = 0;
 	game->dim.p.x = 0;
 	game->dim.p.y = 0;
 	game->walking = 0;
 	game->c = 0;
+	game->i = 0;
+	game->j = 0;
+	game->k = 0;
+	game->ax = 0;
+	game->by = 0;
 }
 
 void	ft_initmlxenv(t_game *game)
 {
 	game->wall = NULL;
-	game->player = NULL;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+	game->player = NULL;
 	game->floor = NULL;
 	game->collect = NULL;
 	game->door = NULL;

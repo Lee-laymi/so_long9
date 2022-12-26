@@ -6,7 +6,7 @@
 /*   By: ami <ami@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:52:56 by skrairab          #+#    #+#             */
-/*   Updated: 2022/12/22 17:24:18 by ami              ###   ########.fr       */
+/*   Updated: 2022/12/26 16:55:29 by skrsirab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	ft_checkwally(t_game *game)
 	j = 0;
 	while (j < game->dim.size.y)
 	{
-		if (game->map.tmp_map[j][0] != '1' || 
-		game->map.tmp_map[j][game->dim.size.x - 1] != '1')
+		if (game->map.tmp_map[j][0] != '1'
+		|| game->map.tmp_map[j][game->dim.size.x - 1] != '1')
 		{
 			write(2, "Map have no wall in y-direction%s\n", 31);
 			return (0);
@@ -52,7 +52,7 @@ int	ft_checkrec(t_game *game)
 {
 	int		j;
 	int		len_rec;
-	
+
 	j = 0;
 	while (j < game->dim.size.y)
 	{

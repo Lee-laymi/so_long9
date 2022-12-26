@@ -18,6 +18,7 @@ SRCS = so_long.c\
 		create_map.c\
 		ft_getnextline/get_next_line_utils.c\
 		ft_getnextline/get_next_line.c\
+		ft_keyhook.c
 
 NAME = so_long
 
@@ -25,13 +26,13 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 MLXFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
-LIBDIR = ./Libfts
+LIBDIR = Libfts
 
-LIBPRINTF = ./ft_printf
+LIBPRINTF = ft_printf
 
 INCLUDE = -L Libfts -lft -L ft_printf -lftprintf
 
@@ -41,18 +42,20 @@ $(NAME): $(OBJS)
 	@make -C mlx/
 	make -C $(LIBDIR)
 	make -C $(LIBPRINTF)
-	$(CC) -g $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $(NAME) $(INCLUDE)
+	$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $(NAME) $(INCLUDE)
 
 
 clean:
 	   rm -rf *.o
+	   rm -rf ft_getnextline/*.o
 		make -C $(LIBDIR)  clean
+		make -C $(LIBPRINTF) clean
 		@make clean -C mlx/
 
 fclean: clean
 		rm -rf $(NAME)
-		rm -rf so_long
 		make -C $(LIBDIR) fclean
+		make -C $(LIBPRINTF) fclean
 
 re: fclean all
 

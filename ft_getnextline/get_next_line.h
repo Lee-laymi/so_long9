@@ -19,9 +19,9 @@
 # include <stdlib.h>
 # include <limits.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 512
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 512
+# endif
 
 typedef struct s_stash
 {
