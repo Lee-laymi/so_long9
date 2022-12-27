@@ -21,14 +21,16 @@ int	key_hook(int keycode, t_game *game)
 	my = game->dim.p.y;
 	if (keycode == 13 || keycode == 126)
 		my = my - 1;
-	if (keycode == 0 || keycode == 123)
+	else if (keycode == 0 || keycode == 123)
 		mx = mx - 1;
-	if (keycode == 1 || keycode == 125)
+	else if (keycode == 1 || keycode == 125)
 		my = my + 1;
-	if (keycode == 2 || keycode == 124)
+	else if (keycode == 2 || keycode == 124)
 		mx = mx + 1;
-	if (keycode == 53)
+	else if (keycode == 53)
 		ft_freemap(game);
+	else
+		return (0);
 	check_walk(mx, my, game);
 	return (0);
 }
