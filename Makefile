@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ami <ami@student.42.fr>                    +#+  +:+       +#+         #
+#    By: skrairab <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/09/22 22:55:16 by skrairab          #+#    #+#              #
-#    Updated: 2022/12/18 16:52:51 by ami              ###   ########.fr        #
+#    Created: 2023/02/22 11:49:40 by skrairab          #+#    #+#              #
+#    Updated: 2023/02/22 11:55:55 by skrairab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,8 +46,7 @@ $(NAME): $(OBJS)
 
 
 clean:
-	   rm -rf *.o
-	   rm -rf ft_getnextline/*.o
+		rm -rf $(OBJS)
 		make -C $(LIBDIR)  clean
 		make -C $(LIBPRINTF) clean
 		@make clean -C mlx/
